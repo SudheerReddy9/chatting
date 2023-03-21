@@ -1,0 +1,6 @@
+Adding firebase to
+android
+ios
+web
+FireBase.initialzeapp() --> android and ios application
+FireBase.initialzeapp(options:) --> web, windows
