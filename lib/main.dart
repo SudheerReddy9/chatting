@@ -1,4 +1,4 @@
-import 'package:chatting/pages/auth/home_page.dart';
+import 'package:chatting/pages/home_page.dart';
 import 'package:chatting/pages/auth/login_page.dart';
 import 'package:chatting/shared/constants.dart';
 import 'package:firebase_core/firebase_core.dart';

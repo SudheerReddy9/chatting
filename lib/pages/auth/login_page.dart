@@ -1,4 +1,4 @@
-import 'package:chatting/pages/register_page.dart';
+import 'package:chatting/pages/auth/register_page.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
