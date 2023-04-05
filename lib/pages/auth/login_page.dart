@@ -39,7 +39,7 @@ class _LoginPageState extends State<LoginPage> {
                 const Spacer(),
                 TextFormField(
                   decoration: textInputDecoration.copyWith(
-                      hintText: "Email", prefixIcon: Icon(Icons.email)),
+                      hintText: "Email", prefixIcon: const Icon(Icons.email)),
                   onChanged: (value) {
                     setState(() {
                       email = value;
@@ -55,13 +55,13 @@ class _LoginPageState extends State<LoginPage> {
                         : "Please Check the entered Email";
                   },
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 TextFormField(
                   obscureText: true,
                   decoration: textInputDecoration.copyWith(
                       hintText: "Password",
-                      prefixIcon: Icon(Icons.lock),
-                      suffixIcon: Icon(Icons.remove_red_eye_rounded)),
+                      prefixIcon: const Icon(Icons.lock),
+                      suffixIcon: const Icon(Icons.remove_red_eye_rounded)),
                   onChanged: (value) {
                     setState(() {
                       password = value;
@@ -76,7 +76,7 @@ class _LoginPageState extends State<LoginPage> {
                     }
                   },
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 // ElevatedButton(onPressed: () {
                 //
                 //   login();
@@ -101,9 +101,9 @@ class _LoginPageState extends State<LoginPage> {
                     text: "Don't have an account?",
                     children: <TextSpan>[
                       TextSpan(text: "Register Here",
-                      style: TextStyle(color: Colors.black,decoration: TextDecoration.underline),
+                      style: const TextStyle(color: Colors.black,decoration: TextDecoration.underline),
                       recognizer: TapGestureRecognizer()..onTap = (){
-                        NextScreen(context, RegisterPage());
+                        nextScreen(context, RegisterPage());
                       }
                       )
                     ]

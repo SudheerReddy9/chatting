@@ -14,7 +14,7 @@ class AuthService {
       if(user != null){
         DatabaseService(uid: user.uid).updateUserData(fullName, email);
         return true;
-      }
+      }else{}
     } on FirebaseAuthException catch (e) {
       print(e);
     }
