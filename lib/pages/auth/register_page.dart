@@ -68,8 +68,8 @@ class _RegisterPageState extends State<RegisterPage> {
                         },
                         validator: (value) {
                           return RegExp(
-                                      r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+"
-                                      r"@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                                     // r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                                        r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
                                   .hasMatch(value!)
                               ? null
                               : "Please Check the entered Email";
@@ -172,9 +172,10 @@ class _RegisterPageState extends State<RegisterPage> {
           .then((value) async {
         if (value == true) {
           await HelperFunctions.saveUserLoggedInStatus(true);
-          await HelperFunctions.saveUserNameStatus(fullName);
           await HelperFunctions.saveUserEmailStatus(email);
-          nextScreenReplace(context, const HomePage());
+          await HelperFunctions.saveUserNameStatus(fullName);
+
+          nextScreenReplace(context, HomePage());
         } else {
           showSnackBar(context, Colors.red, value);
           setState(() {

@@ -45,7 +45,10 @@ bool _isSignedIn = false;
   getUserLoggedInStatus() async {
     await HelperFunctions.getUserLoggedInStatus().then((value){
       if(value != null){
-        _isSignedIn =value;
+        setState(() {
+          _isSignedIn =value;
+        });
+
       }
     });
   }
