@@ -1,58 +1,32 @@
-import 'package:chatting/helper/helper_function.dart';
-import 'package:chatting/pages/auth/login_page.dart';
-import 'package:chatting/pages/profile_page.dart';
-import 'package:chatting/pages/search_page.dart';
+import 'package:chatting/pages/home_page.dart';
 import 'package:chatting/service/auth_service.dart';
-import 'package:chatting/widgets/forms.dart';
 import 'package:flutter/material.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+import '../widgets/forms.dart';
+import 'auth/login_page.dart';
+
+class ProfilePage extends StatefulWidget {
+  String userName;
+  String email;
+  ProfilePage({Key? key, required this.userName, required this.email}) : super(key: key);
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<ProfilePage> createState() => _ProfilePageState();
 }
 
-class _HomePageState extends State<HomePage> {
-  String userName = '';
-  String email = '';
+class _ProfilePageState extends State<ProfilePage> {
   AuthService authService = AuthService();
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    gettingUserData();
-  }
-
-  gettingUserData() {
-    HelperFunctions.getUserEmailStatus().then((value) {
-      setState(() {
-        email = value!;
-      });
-    });
-    HelperFunctions.getUserNameStatus().then((value) {
-      setState(() {
-        userName = value!;
-      });
-    });
-  }
-
+  String userName = '';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          actions: [
-            IconButton(
-                onPressed: () {
-                  nextScreenReplace(context, const SearchPage());
-                },
-                icon: const Icon(Icons.search))
-          ],
-          elevation: 0,
           centerTitle: true,
-          backgroundColor: Colors.grey,
-          title: const Text("Groups"),
+          title: const Text(
+            "Profile",
+            style: TextStyle(
+                color: Colors.white, fontSize: 27, fontWeight: FontWeight.bold),
+          ),
         ),
         drawer: Drawer(
             child: ListView(children: [
@@ -65,7 +39,7 @@ class _HomePageState extends State<HomePage> {
             height: 15,
           ),
           Text(
-            userName,
+            widget.userName,
             textAlign: TextAlign.center,
             style: const TextStyle(fontWeight: FontWeight.bold),
           ),
@@ -73,19 +47,20 @@ class _HomePageState extends State<HomePage> {
             height: 1,
           ),
           ListTile(
-            onTap: () {},
+            onTap: () {
+              nextScreen(context, const HomePage());
+            },
             leading: const Icon(Icons.group),
-            title: const Text("Groups"),
+            title: const Text("Groups",
+            style: TextStyle(color: Colors.black),),
           ),
           ListTile(
-            onTap: () {
-              nextScreenReplace(context,  ProfilePage(
-                userName: userName,
-                email: email
-              ));
-            },
+            onTap: () {},
+            selected: true,
+            selectedColor: Colors.orange,
             leading: const Icon(Icons.groups),
-            title: const Text("Profile"),
+            title: const Text("Profile",
+              style: TextStyle(color: Colors.black),),
           ),
           ListTile(
             onTap: () async {
@@ -117,8 +92,39 @@ class _HomePageState extends State<HomePage> {
                   });
             },
             leading: const Icon(Icons.exit_to_app),
-            title: const Text("LogOut"),
+            title: const Text("LogOut",
+              style: TextStyle(color: Colors.black),),
           )
-        ])));
+        ])),
+      body: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 40),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Icon(Icons.account_circle,
+            size: 200,
+            color: Colors.grey[700],),
+            const SizedBox(height: 15.5,),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text("Full Name", style: TextStyle(fontSize: 17),),
+                Text(widget.userName, style: const TextStyle(fontSize: 17),)
+              ],
+            ),
+            const Divider(
+              height: 20,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text("Email", style: TextStyle(fontSize: 17),),
+                Text(widget.email, style: const TextStyle(fontSize: 17),)
+              ],
+            )
+          ],
+        ),
+      ),
+    );
   }
 }
