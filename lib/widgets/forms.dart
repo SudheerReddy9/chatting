@@ -10,12 +10,12 @@ const textInputDecoration = InputDecoration(
       OutlineInputBorder(borderSide: BorderSide(color: Colors.red, width: 2)),
 );
 void nextScreen(context, page) {
-  Navigator.push(context, MaterialPageRoute(builder: ((context) => page)));
+  Navigator.push(context, MaterialPageRoute(builder: (context) => page));
 }
 
 void nextScreenReplace(context, page) {
   Navigator.pushReplacement(
-      context, MaterialPageRoute(builder: ((context) => page)));
+      context, MaterialPageRoute(builder: (context) => page));
 }
 
 void showSnackBar(context, color, message) {

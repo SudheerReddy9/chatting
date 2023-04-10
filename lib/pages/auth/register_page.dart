@@ -18,9 +18,9 @@ class RegisterPage extends StatefulWidget {
 class _RegisterPageState extends State<RegisterPage> {
   final formKey = GlobalKey<FormState>();
   bool _isloading = false;
-  String fullName = '';
-  String email = '';
-  String password = '';
+  String fullName = "";
+  String email = "";
+  String password = "";
   AuthService authService = AuthService();
 
   @override
@@ -34,7 +34,6 @@ class _RegisterPageState extends State<RegisterPage> {
               duration: Duration(seconds: 10),
               strokeWidth: 2,
               color: Colors.orange,
-
             ))
           : Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 60),
@@ -56,35 +55,14 @@ class _RegisterPageState extends State<RegisterPage> {
                             fontSize: 15, fontWeight: FontWeight.w400),
                       ),
                       const Spacer(),
-                      TextFormField(
-                        decoration: textInputDecoration.copyWith(
-                            hintText: "Email",
-                            prefixIcon: const Icon(Icons.email)),
-                        onChanged: (value) {
-                          setState(() {
-                            email = value;
-                            //print(email);
-                          });
-                        },
-                        validator: (value) {
-                          return RegExp(
-                                     // r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-                                        r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-                                  .hasMatch(value!)
-                              ? null
-                              : "Please Check the entered Email";
-                        },
-                      ),
-                      const SizedBox(
-                        height: 15,
-                      ),
+
                       TextFormField(
                         decoration: textInputDecoration.copyWith(
                             hintText: "Full Name",
                             prefixIcon: const Icon(Icons.person)),
                         onChanged: (value) {
                           setState(() {
-                            email = value;
+                            fullName = value;
                             //print(email);
                           });
                         },
@@ -97,6 +75,36 @@ class _RegisterPageState extends State<RegisterPage> {
                         },
                       ),
                       const SizedBox(height: 15),
+                      TextFormField(
+                          decoration: textInputDecoration.copyWith(
+                              hintText: "Email",
+                              prefixIcon: const Icon(Icons.email)),
+                          onChanged: (value) {
+                            setState(() {
+                              email = value;
+                              //print(email);
+                            });
+                          },
+                          // validator: (value) {
+                          //   return RegExp(
+                          //              // r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                          //                 r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                          //           .hasMatch(value!)
+                          //       ? null
+                          //       : "Please Check the entered Email";
+                          // },
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return "Please enter the email";
+                            } else if (!value.contains('@gmail.com')) {
+                              return 'Please enter the valid email';
+                            } else if (!RegExp(r'^[a-zA-z0-9@.]+$').hasMatch(value)){
+                              return 'Please enter the valid email';
+                            }
+                          }),
+                      const SizedBox(
+                        height: 15,
+                      ),
                       TextFormField(
                         obscureText: true,
                         decoration: textInputDecoration.copyWith(
@@ -133,7 +141,9 @@ class _RegisterPageState extends State<RegisterPage> {
                                       borderRadius: BorderRadius.circular(30))),
                               onPressed: () {
                                 register();
+
                               },
+
                               child: const Text(
                                 "Register",
                                 style: TextStyle(
@@ -175,7 +185,7 @@ class _RegisterPageState extends State<RegisterPage> {
           await HelperFunctions.saveUserEmailStatus(email);
           await HelperFunctions.saveUserNameStatus(fullName);
 
-          nextScreenReplace(context, HomePage());
+          nextScreenReplace(context, const HomePage());
         } else {
           showSnackBar(context, Colors.red, value);
           setState(() {
