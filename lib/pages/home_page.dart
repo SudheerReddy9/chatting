@@ -21,6 +21,7 @@ class _HomePageState extends State<HomePage> {
   String email = '';
   AuthService authService = AuthService();
   Stream? groups;
+  String groupName ='';
   bool _isloading = false;
 
   @override
@@ -156,14 +157,56 @@ class _HomePageState extends State<HomePage> {
               textAlign: TextAlign.left,
             ),
             content: _isloading == true ? const CircularProgressIndicator() :  TextField(
+              onChanged: (value){
+                setState(() {
+                  groupName = value;
+                });
+              },
+              style: const TextStyle(color: Colors.black),
               decoration: InputDecoration(
                 enabledBorder: OutlineInputBorder(
-                  borderSide: const BorderSide(color: Colors.orangeAccent,
+                  borderSide: const BorderSide (color: Colors.orangeAccent,
                   ),
-                  borderRadius: BorderRadius.circular(30)
-                )
+                  borderRadius: BorderRadius.circular(20)
+                ),
+                  focusedBorder: OutlineInputBorder(
+                      borderSide: const BorderSide(color: Colors.lightGreen,
+                      ),
+                      borderRadius: BorderRadius.circular(20)
+                  ),
+                errorBorder: OutlineInputBorder(
+                    borderSide: const BorderSide(color: Colors.redAccent,
+                    ),
+                    borderRadius: BorderRadius.circular(20)
+                ),
               ),
             ),
+            actions: [
+              ElevatedButton(onPressed: (){
+                Navigator.pop(context);
+              },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.red
+                ),
+                child: const Text("Cancel"),
+
+              ),
+              ElevatedButton(onPressed: (){
+                if(groupName != ""){
+                  setState(() {
+                    _isloading = true;
+                  });
+                  DatabaseService(uid: FirebaseAuth.instance.currentUser!.uid).CreatGroup(userName, FirebaseAuth.instance.currentUser!.uid, groupName).whenComplete(() {
+                    _isloading = false;
+                  });
+                  Navigator.of(context).pop();
+                  showSnackBar(context, Colors.green , "Group created successfully");
+                }
+              },
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.green),
+                  child: const Text("Create"))
+            ],
           );
         });
   }
