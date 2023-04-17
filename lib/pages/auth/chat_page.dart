@@ -35,7 +35,7 @@ class _ChatPageState extends State<ChatPage> {
      chats = value;
    });
  });
- DatabaseService().getGroupadmin(widget.groupId).then((value){
+ DatabaseService().getGroupAdmin(widget.groupId).then((value){
    setState(() {
      admin = value;
    });
@@ -58,7 +58,7 @@ class _ChatPageState extends State<ChatPage> {
                       adminName: admin,
                     ));
               },
-              icon: Icon(Icons.info))
+              icon: const Icon(Icons.info))
         ],
       ),
       body: Center(child: Text(widget.groupName)),

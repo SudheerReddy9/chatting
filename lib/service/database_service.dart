@@ -44,7 +44,7 @@ class DatabaseService {
       "members": FieldValue.arrayUnion(['$id-$userName']),
       "groupId": groupdocumentReference.id,
     });
-    DocumentReference userdocumentReference = await userCollection.doc(uid);
+    DocumentReference userdocumentReference = userCollection.doc(uid);
     return await userdocumentReference.update({
       "groups":
           FieldValue.arrayUnion(["${groupdocumentReference.id}_$groupName"])
@@ -58,9 +58,12 @@ class DatabaseService {
         .orderBy("time")
         .get();
   }
-  Future getGroupadmin( String groupId) async{
+  Future getGroupAdmin( String groupId) async{
     DocumentReference d = groupCollection.doc(groupId);
     DocumentSnapshot documentSnapshot = await d.get();
     return documentSnapshot['admin'];
+  }
+  getGroupMembers(groupId){
+    return groupCollection.doc(groupId).snapshots();
   }
 }
